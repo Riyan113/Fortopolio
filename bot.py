@@ -10,8 +10,8 @@ openai.api_key = OPENAI_API_KEY
 
 # Inisialisasi bot
 intents = discord.Intents.default()
+intents.messages = True  # Supaya bot bisa membaca pesan
 bot = discord.Client(intents=intents)
-
 @bot.event
 async def on_ready():
     print(f'Bot {bot.user} sudah online!')
@@ -22,7 +22,7 @@ async def on_message(message):
         return
 
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": message.content}]
     )
     await message.channel.send(response["choices"][0]["message"]["content"])
